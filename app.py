@@ -166,10 +166,8 @@ Model = 0
 
 # Preprocesamiento de datos
 input_data = pd.DataFrame({
-    'ID': [0],  # ID es eliminada en preprocesamiento, así que puede ser 0
     'Levy': [Levy],
     'Manufacturer': [Manufacturer],
-    'Model': [0],  # Model es eliminada en preprocesamiento, así que puede ser 0
     'Prod_year': [Prod_year],
     'Category': [Category],
     'Leather_interior': [Leather_interior],
@@ -184,7 +182,6 @@ input_data = pd.DataFrame({
     'Wheel': [Wheel],
     'Color': [Color],
     'Airbags': [Airbags],
-    'Price': [Price]  # Incluimos Price como 0 para completar las columnas necesarias
 })
 
 
