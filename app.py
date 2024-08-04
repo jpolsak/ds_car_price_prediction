@@ -188,7 +188,6 @@ input_data = pd.DataFrame({
 # Realizar la predicción
 if st.button('Predecir'):
     # Preprocesar los datos de entrada usando el pipeline completo
-    input_data = input_data.drop(columns=['Model', 'ID'], errors='ignore')
     x_input_preprocesado = pipeline_preprocesamiento_2.transform(input_data)
     
     # Realizar la predicción
