@@ -72,33 +72,18 @@ def sep_x_y(df):
   y = df.Price
   return x_inicial,y
 
-# Definición del transformador de separación x-y
-transformador_sep_x_y = FunctionTransformer(sep_x_y)
+# Definición del transformador para el encoding de variables categóricas y Standard Scaler de variables numéricas
+transformador_enc_sc = ColumnTransformer(
+    transformers=[
+        ('num', StandardScaler(), make_column_selector(dtype_include=np.number)),
+        ('cat', OneHotEncoder(sparse_output=False, handle_unknown='ignore'), make_column_selector(dtype_include=object))
+    ]
+)
 
-# Definición del transformador para el encoding de variables categóricas y standard scaler de variables numéricas
-transformador_enc_sc = make_column_transformer(
-      (StandardScaler(),
-       make_column_selector(dtype_include=np.number)),
-      (OneHotEncoder(sparse_output=False),
-       make_column_selector(dtype_include=object)))
-
-# Definición de función de encoding
-def encoding(x):
-  # Transformación del dataset con One Hot Enconding y Standard Scaler
-  x = transformador_enc_sc.fit_transform(x_inicial)
-  # Obtener los nombres de las columnas numéricas originales
-  numerical_columns = x_inicial.select_dtypes(include=[np.number]).columns
-  # Obtener los nombres de las columnas categóricas codificadas
-  encoder = transformador_enc_sc.named_transformers_['onehotencoder']
-  encoded_categorical_columns = encoder.get_feature_names_out(x_inicial.select_dtypes(include=[object]).columns)
-  # Combinar los nombres de las columnas
-  all_columns = np.concatenate([numerical_columns,encoded_categorical_columns])
-  # Crear un DataFrame con los datos transformados y los nombres de las columnas
-  x_preprocesado = pd.DataFrame(x, columns=all_columns)
-  return x_preprocesado
-
-# Definición del transformador de encoding
-transformador_encoding = FunctionTransformer(encoding)
+# Definición del pipeline de preprocesamiento para encoding
+pipeline_preprocesamiento_2 = Pipeline(steps=[
+    ('encoding', transformador_enc_sc)
+])
 
 # Creación del pipeline
 pipeline_preprocesamiento_1 = Pipeline(steps=[('Remover duplicados',transformador_remover_duplicados),
