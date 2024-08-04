@@ -16,10 +16,7 @@ from sklearn.metrics import r2_score
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestRegressor as RF
-from xgboost import XGBRegressor as XG
-from catboost import CatBoostRegressor as CB
 from lightgbm import LGBMRegressor
-from sklearn.ensemble import AdaBoostRegressor
 
 # Definición de la función de eliminación de duplicados
 def remover_duplicados(df):
