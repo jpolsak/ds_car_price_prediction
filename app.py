@@ -187,7 +187,7 @@ input_data = pd.DataFrame({
 # Botón para mostrar las columnas del DataFrame preprocesado
 if st.button('Mostrar Columnas del Pipeline 1'):
     # Preprocesar input_data usando pipeline_preprocesamiento_1
-    x_inicial_preprocesado, _ = pipeline_preprocesamiento_1.transform(input_data)
+    x_inicial_preprocesado, _ = pipeline_preprocesamiento_1.transform(x_inicial)
     
     # Obtener y mostrar las columnas
     columnas = x_inicial_preprocesado.columns
