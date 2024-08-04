@@ -1,6 +1,6 @@
 streamlit
 joblib
-pandas
 numpy
-sklearn
+pandas
+scikit-learn
 lightgbm
