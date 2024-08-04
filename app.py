@@ -122,7 +122,7 @@ pipeline_preprocesamiento_2 = Pipeline(steps=[('Encoding',transformador_enc_sc)]
 # Preprocesamiento
 x_inicial,y = pipeline_preprocesamiento_1.fit_transform(df)
 x = pipeline_preprocesamiento_2.fit_transform(x_inicial)
-x = x.reset_index(drop=True)
+#x = x.reset_index(drop=True)
 y = y.reset_index(drop=True)
 x_train_f, x_test_f, y_train_f, y_test_f = train_test_split(x,y,random_state=42)
 
