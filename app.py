@@ -14,7 +14,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import r2_score
 from sklearn.ensemble import RandomForestRegressor as RF
-from lightgbm import LGBMRegressor
 import gzip
 import requests
 from io import BytesIO
