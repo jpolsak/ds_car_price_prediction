@@ -200,7 +200,7 @@ st.write(input_data)
 # Realizar la predicción
 if st.button('Predecir'):
     # Preprocesar los datos de entrada usando el pipeline completo
-    x_input_preprocesado = input_data ###FALTA EL PIPELINE!!!
+    x_input_preprocesado = pipeline_preprocesamiento_2.transform(input_data)
     
     # Realizar la predicción
     prediction = model.predict(x_input_preprocesado)
