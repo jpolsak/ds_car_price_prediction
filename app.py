@@ -177,12 +177,11 @@ input_data = pd.DataFrame({
     'Price': [Price]  # Incluimos Price como 0 para completar las columnas necesarias
 })
 
-# Aplicar los pipelines de preprocesamiento al input_data
-x_inicial_input, _ = pipeline_preprocesamiento_1.transform(input_data)
 
 # Realizar la predicción
 if st.button('Predecir'):
     # Asegúrate de que 'x_input' esté correctamente preprocesado
+    x_inicial_input, _ = pipeline_preprocesamiento_1.transform(input_data)
     x_input_preprocesado = pipeline_preprocesamiento_2.transform(input_data)
     
     # Realizar la predicción
