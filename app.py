@@ -186,7 +186,7 @@ input_data = pd.DataFrame({
 
 
 # Preprocesar input_data usando pipeline_preprocesamiento_1
-x_inicial_preprocesado = pipeline_preprocesamiento_1.transform(x_inicial)
+x_inicial_preprocesado = x_inicial
     
 # Obtener y mostrar las columnas
 columnas = x_inicial_preprocesado.columns
@@ -200,7 +200,7 @@ st.write(input_data)
 # Realizar la predicción
 if st.button('Predecir'):
     # Preprocesar los datos de entrada usando el pipeline completo
-    x_input_preprocesado = input_data
+    x_input_preprocesado = input_data ###FALTA EL PIPELINE!!!
     
     # Realizar la predicción
     prediction = model.predict(x_input_preprocesado)
