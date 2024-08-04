@@ -49,7 +49,7 @@ def sep_x_y(df):
     y = df.Price
     return x_inicial, y
 # Cargar el modelo
-model = joblib.load('pipeline_model.pkl.gz')
+model = joblib.load('pipeline_model.pkl')
 
 # Título de la aplicación
 st.title('Data Science - Modelo de Machine Learning para la predicción del precio de un auto en función de sus características')
