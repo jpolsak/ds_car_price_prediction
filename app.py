@@ -8,6 +8,7 @@ from sklearn.compose import make_column_transformer
 from sklearn.compose import make_column_selector
 from sklearn.preprocessing import OneHotEncoder
 from lightgbm import LGBMRegressor
+from sklearn.preprocessing import StandardScaler
 
 # Definición de la función de eliminación de duplicados
 def remover_duplicados(df):
