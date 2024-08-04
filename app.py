@@ -15,6 +15,9 @@ from sklearn.model_selection import cross_val_score
 from sklearn.metrics import r2_score
 from sklearn.ensemble import RandomForestRegressor as RF
 from lightgbm import LGBMRegressor
+import gzip
+import requests
+from io import BytesIO
 
 # Definición de la función de eliminación de duplicados
 def remover_duplicados(df):
@@ -48,8 +51,13 @@ def sep_x_y(df):
     x_inicial = df.drop('Price', axis=1)
     y = df.Price
     return x_inicial, y
-# Cargar el modelo
-model = joblib.load('pipeline_model.pkl')
+    
+# Descargar y cargar el archivo .pkl.gz
+url = 'https://github.com/jpolsak/ds_car_price_prediction/raw/main/pipeline_model_obs.pkl.gz'
+response = requests.get(url)
+
+with gzip.open(BytesIO(response.content), 'rb') as f:
+    model = joblib.load(f)
 
 # Título de la aplicación
 st.title('Data Science - Modelo de Machine Learning para la predicción del precio de un auto en función de sus características')
