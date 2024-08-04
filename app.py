@@ -124,7 +124,7 @@ model = LGBMRegressor(
     max_depth=-1,          # Profundidad máxima del árbol, -1 para sin límite
     random_state=42        # Semilla para reproducibilidad
 )
-model.fit(x_train, y_train)
+model.fit(x_train_f, y_train_f)
 
 # Título de la aplicación
 st.title('Data Science - Modelo de Machine Learning para la predicción del precio de un auto en función de sus características')
