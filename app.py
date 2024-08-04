@@ -98,7 +98,7 @@ def encoding(x):
   return x_preprocesado
 
 # Definición del transformador de encoding
-transformador_encoding = FunctionTransformer(encoding)
+transformador_encoding = FunctionTransformer(transformador_enc_sc)
 
 # Creación del pipeline
 pipeline_preprocesamiento_1 = Pipeline(steps=[('Remover duplicados',transformador_remover_duplicados),
