@@ -6,6 +6,7 @@ from sklearn.preprocessing import FunctionTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.compose import make_column_transformer
 from sklearn.compose import make_column_selector
+from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.tree import DecisionTreeRegressor
 from lightgbm import LGBMRegressor
@@ -76,11 +77,19 @@ def sep_x_y(df):
 transformador_sep_x_y = FunctionTransformer(sep_x_y)
 
 # Definición del transformador para el encoding de variables categóricas y standard scaler de variables numéricas
-transformador_enc_sc = make_column_transformer(
-      (StandardScaler(),
-       make_column_selector(dtype_include=np.number)),
-      (OneHotEncoder(sparse_output=False),
-       make_column_selector(dtype_include=object)))
+#transformador_enc_sc = make_column_transformer(
+#      (StandardScaler(),
+#       make_column_selector(dtype_include=np.number)),
+#      (OneHotEncoder(sparse_output=False),
+#       make_column_selector(dtype_include=object)))
+
+# Definición del transformador para el encoding de variables categóricas y Standard Scaler de variables numéricas
+transformador_enc_sc = ColumnTransformer(
+    transformers=[
+        ('num', StandardScaler(), make_column_selector(dtype_include=np.number)),
+        ('cat', OneHotEncoder(sparse_output=False), make_column_selector(dtype_include=object))
+    ]
+)
 
 # Definición de función de encoding
 def encoding(x):
@@ -107,7 +116,7 @@ pipeline_preprocesamiento_1 = Pipeline(steps=[('Remover duplicados',transformado
                                             ('Imputación de Levy',transformador_imputación),
                                             ('Separación x-y',transformador_sep_x_y)])
 
-pipeline_preprocesamiento_2 = Pipeline(steps=[('Encoding',transformador_encoding)])
+pipeline_preprocesamiento_2 = Pipeline(steps=[('Encoding',transformador_enc_sc)])
 
 # Preprocesamiento
 x_inicial,y = pipeline_preprocesamiento_1.fit_transform(df)
