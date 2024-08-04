@@ -127,15 +127,13 @@ model = LGBMRegressor(
 model.fit(x_train_f, y_train_f)
 
 # Título de la aplicación
-st.title('Data Science - Modelo de Machine Learning para la predicción del precio de un auto en función de sus características')
+st.title('Data Science - Modelo de Machine Learning para la predicción del precio de un auto en función de sus características 🚗')
 
 # Formulario para la entrada de datos
 st.header('Introduzca los datos del vehículo')
 
-ID = st.number_input('ID', value=0)
 Levy = st.number_input('Levy', min_value=0.0)
 Manufacturer = st.selectbox('Manufacturer', ['ACURA', 'ALFA ROMEO', 'ASTON MARTIN', 'AUDI', 'BENTLEY', 'BMW', 'BUICK', 'CADILLAC', 'CHEVROLET', 'CHRYSLER', 'CITROEN', 'DAEWOO', 'DAIHATSU', 'DODGE', 'FERRARI', 'FIAT', 'FORD', 'GAZ', 'GMC', 'GREATWALL', 'HAVAL', 'HONDA', 'HUMMER', 'HYUNDAI', 'INFINITI', 'ISUZU', 'JAGUAR', 'JEEP', 'KIA', 'LAMBORGHINI', 'LANCIA', 'LAND ROVER', 'LEXUS', 'LINCOLN', 'MASERATI', 'MAZDA', 'MERCEDES-BENZ', 'MERCURY', 'MINI', 'MITSUBISHI', 'MOSKVICH', 'NISSAN', 'OPEL', 'PEUGEOT', 'PONTIAC', 'PORSCHE', 'RENAULT', 'ROLLS-ROYCE', 'ROVER', 'SAAB', 'SATURN', 'SCION', 'SEAT', 'SKODA', 'SSANGYONG', 'SUBARU', 'SUZUKI', 'TESLA', 'TOYOTA', 'UAZ', 'VAZ', 'VOLKSWAGEN', 'VOLVO', 'ZAZ', 'სხვა'])
-Model = st.text_input('Model', value='0')
 Prod_year = st.number_input('Prod. year', min_value=1939, max_value=2020, step=1)
 Category = st.selectbox('Category', ['Cabriolet', 'Coupe', 'Goods wagon', 'Hatchback', 'Jeep', 'Limousine', 'Microbus', 'Minivan', 'Pickup', 'Sedan', 'Universal'])
 Leather_interior = st.selectbox('Leather interior', ['Yes', 'No'])
@@ -179,7 +177,11 @@ input_data = pd.DataFrame({
     'Price': [Price]  # Incluimos Price como 0 para completar las columnas necesarias
 })
 
+# Aplicar los pipelines de preprocesamiento al input_data
+x_inicial_input, _ = pipeline_preprocesamiento_1.transform(input_data)
+x_input = pipeline_preprocesamiento_2.transform(x_inicial_input)
+
 # Realizar la predicción
 if st.button('Predecir'):
-    prediction = model.predict(input_data)
-    st.write(f'La predicción del modelo es: {prediction}')
+    prediction = model.predict(x_input)
+    st.write(f'La predicción del modelo es: {prediction[0]}')
