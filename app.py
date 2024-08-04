@@ -18,21 +18,30 @@ import gzip
 import requests
 from io import BytesIO
 
+#Extracción dataset
+df = pd.read_csv('https://raw.githubusercontent.com/jpolsak/datasets/main/car_price_prediction_modif.csv')
+
 # Definición de la función de eliminación de duplicados
 def remover_duplicados(df):
-    df_sin_duplicados = df.drop('ID', axis=1).drop_duplicates()
-    return df_sin_duplicados
+  df_sin_duplicados = df_sin_outlier.drop('ID',axis=1).drop_duplicates()
+  return df_sin_duplicados
+
+# Definición del transformador de eliminación de duplicados
+transformador_remover_duplicados = FunctionTransformer(remover_duplicados)
 
 # Definición de la función de eliminación de outliers sobre la variable precio con el método de IQR
 def remover_outliers(df):
-    Q1 = np.percentile(df['Price'], 25)
-    Q3 = np.percentile(df['Price'], 75)
-    IQR = Q3 - Q1
-    lower = Q1 - 1.5 * IQR
-    upper = Q3 + 1.5 * IQR
-    mask = (df['Price'] < lower) | (df['Price'] > upper)
-    df_sin_outliers = df[~mask]
-    return df_sin_outliers
+  Q1 = np.percentile(df['Price'], 25)
+  Q3 = np.percentile(df['Price'], 75)
+  IQR = Q3 - Q1
+  lower = Q1 - 1.5 * IQR
+  upper = Q3 + 1.5 * IQR
+  mask = (df['Price'] < lower) | (df['Price'] > upper)
+  df_sin_outliers = df[~mask]
+  return df_sin_outliers
+
+# Definición del transformador de eliminación de outliers
+transformador_remover_outliers = FunctionTransformer(remover_outliers)
 
 # Definición de la función de eliminación de registros sin datos de Levy
 def imputar_nulos(df):
@@ -42,21 +51,80 @@ def imputar_nulos(df):
 
 # Definición de la función de eliminación de la variable Modelo por tener muy alta cardinalidad y la variable ID
 def remover_var(df):
-    df_remover_var = df.drop(['Model', 'ID'], axis=1, errors='ignore')
-    return df_remover_var
+  df_remover_var = df.drop(['Model','ID'],axis=1,errors='ignore')
+  return df_remover_var
+
+# Definición del transformador de eliminación de variables
+transformador_remover_variables = FunctionTransformer(remover_var)
+
+# Definición de la función de eliminación de registros sin datos de Levy
+def imputar_nulos(df):
+  df_sin_na = df.copy()
+  df_sin_na = df_sin_na.dropna()
+  return df_sin_na
+
+# Definición del transformador de imputar nulos
+transformador_imputación = FunctionTransformer(imputar_nulos)
 
 # Definición de la función de separación x-y
 def sep_x_y(df):
-    x_inicial = df.drop('Price', axis=1)
-    y = df.Price
-    return x_inicial, y
-    
-# Descargar y cargar el archivo .pkl.gz
-url = 'https://github.com/jpolsak/ds_car_price_prediction/raw/main/pipeline_model_obs.pkl.gz'
-response = requests.get(url)
+  x_inicial = df.drop('Price',axis=1)
+  y = df.Price
+  return x_inicial,y
 
-with gzip.open(BytesIO(response.content), 'rb') as f:
-    model = joblib.load(f)
+# Definición del transformador de separación x-y
+transformador_sep_x_y = FunctionTransformer(sep_x_y)
+
+# Definición del transformador para el encoding de variables categóricas y standard scaler de variables numéricas
+transformador_enc_sc = make_column_transformer(
+      (StandardScaler(),
+       make_column_selector(dtype_include=np.number)),
+      (OneHotEncoder(sparse_output=False),
+       make_column_selector(dtype_include=object)))
+
+# Definición de función de encoding
+def encoding(x):
+  # Transformación del dataset con One Hot Enconding y Standard Scaler
+  x = transformador_enc_sc.fit_transform(x_inicial)
+  # Obtener los nombres de las columnas numéricas originales
+  numerical_columns = x_inicial.select_dtypes(include=[np.number]).columns
+  # Obtener los nombres de las columnas categóricas codificadas
+  encoder = transformador_enc_sc.named_transformers_['onehotencoder']
+  encoded_categorical_columns = encoder.get_feature_names_out(x_inicial.select_dtypes(include=[object]).columns)
+  # Combinar los nombres de las columnas
+  all_columns = np.concatenate([numerical_columns,encoded_categorical_columns])
+  # Crear un DataFrame con los datos transformados y los nombres de las columnas
+  x_preprocesado = pd.DataFrame(x, columns=all_columns)
+  return x_preprocesado
+
+# Definición del transformador de encoding
+transformador_encoding = FunctionTransformer(encoding)
+
+# Creación del pipeline
+pipeline_preprocesamiento_1 = Pipeline(steps=[('Remover duplicados',transformador_remover_duplicados),
+                                            ('Eliminación de outliers',transformador_remover_outliers),
+                                            ('Eliminación de variables',transformador_remover_variables),
+                                            ('Imputación de Levy',transformador_imputación),
+                                            ('Separación x-y',transformador_sep_x_y)])
+
+pipeline_preprocesamiento_2 = Pipeline(steps=[('Encoding',transformador_encoding)])
+
+# Preprocesamiento
+x_inicial,y = pipeline_preprocesamiento_1.fit_transform(df)
+x = pipeline_preprocesamiento_2.fit_transform(x_inicial)
+x = x.reset_index(drop=True)
+y = y.reset_index(drop=True)
+x_train_f, x_test_f, y_train_f, y_test_f = train_test_split(x,y,random_state=42)
+
+#Modelo
+model = LGBMRegressor(
+    n_estimators=100,      # Número de árboles
+    learning_rate=0.1,     # Tasa de aprendizaje
+    num_leaves=31,         # Número de hojas en cada árbol
+    max_depth=-1,          # Profundidad máxima del árbol, -1 para sin límite
+    random_state=42        # Semilla para reproducibilidad
+)
+model.fit(x_train, y_train)
 
 # Título de la aplicación
 st.title('Data Science - Modelo de Machine Learning para la predicción del precio de un auto en función de sus características')
