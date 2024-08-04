@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import FunctionTransformer
 from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
 from sklearn.compose import make_column_transformer
 from sklearn.compose import make_column_selector
 from sklearn.pipeline import Pipeline
