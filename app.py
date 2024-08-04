@@ -9,6 +9,7 @@ from sklearn.compose import make_column_selector
 from sklearn.preprocessing import OneHotEncoder
 from lightgbm import LGBMRegressor
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 
 # Definición de la función de eliminación de duplicados
 def remover_duplicados(df):
