@@ -23,7 +23,7 @@ df = pd.read_csv('https://raw.githubusercontent.com/jpolsak/datasets/main/car_pr
 
 # Definición de la función de eliminación de duplicados
 def remover_duplicados(df):
-  df_sin_duplicados = df_sin_outlier.drop('ID',axis=1).drop_duplicates()
+  df_sin_duplicados = df.drop('ID',axis=1).drop_duplicates()
   return df_sin_duplicados
 
 # Definición del transformador de eliminación de duplicados
