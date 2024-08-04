@@ -180,9 +180,9 @@ input_data = pd.DataFrame({
 
 # Realizar la predicción
 if st.button('Predecir'):
-    # Asegúrate de que 'x_input' esté correctamente preprocesado
+    # Preprocesar los datos de entrada usando el pipeline completo
     x_inicial_input, _ = pipeline_preprocesamiento_1.transform(input_data)
-    x_input_preprocesado = pipeline_preprocesamiento_2.transform(input_data)
+    x_input_preprocesado = pipeline_preprocesamiento_2.transform(x_inicial_input)
     
     # Realizar la predicción
     prediction = model.predict(x_input_preprocesado)
@@ -190,3 +190,4 @@ if st.button('Predecir'):
     # Obtener el valor de la predicción y formatearlo
     precio_predicho = prediction[0]
     st.write(f'El precio predicho es: ${precio_predicho:.2f}')
+  
