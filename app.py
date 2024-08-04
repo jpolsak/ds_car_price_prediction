@@ -88,7 +88,7 @@ transformador_sep_x_y = FunctionTransformer(sep_x_y)
 transformador_enc_sc = ColumnTransformer(
     transformers=[
         ('num', StandardScaler(), make_column_selector(dtype_include=np.number)),
-        ('cat', OneHotEncoder(sparse_output=False), make_column_selector(dtype_include=object))
+        ('cat', OneHotEncoder(sparse_output=False, handle_unknown='ignore'), make_column_selector(dtype_include=object))
     ]
 )
 
