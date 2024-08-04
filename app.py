@@ -11,37 +11,36 @@ from lightgbm import LGBMRegressor
 
 # Definición de la función de eliminación de duplicados
 def remover_duplicados(df):
-  df_sin_duplicados = df.drop('ID',axis=1).drop_duplicates()
-  return df_sin_duplicados
-  
+    df_sin_duplicados = df.drop('ID', axis=1).drop_duplicates()
+    return df_sin_duplicados
+
 # Definición de la función de eliminación de outliers sobre la variable precio con el método de IQR
 def remover_outliers(df):
-  Q1 = np.percentile(df['Price'], 25)
-  Q3 = np.percentile(df['Price'], 75)
-  IQR = Q3 - Q1
-  lower = Q1 - 1.5 * IQR
-  upper = Q3 + 1.5 * IQR
-  mask = (df['Price'] < lower) | (df['Price'] > upper)
-  df_sin_outliers = df[~mask]
-  return df_sin_outliers
+    Q1 = np.percentile(df['Price'], 25)
+    Q3 = np.percentile(df['Price'], 75)
+    IQR = Q3 - Q1
+    lower = Q1 - 1.5 * IQR
+    upper = Q3 + 1.5 * IQR
+    mask = (df['Price'] < lower) | (df['Price'] > upper)
+    df_sin_outliers = df[~mask]
+    return df_sin_outliers
 
 # Definición de la función de eliminación de registros sin datos de Levy
 def imputar_nulos(df):
-  df_sin_na = df.copy()
-  df_sin_na = df_sin_na.dropna()
-  return df_sin_na
+    df_sin_na = df.copy()
+    df_sin_na = df_sin_na.dropna()
+    return df_sin_na
 
 # Definición de la función de eliminación de la variable Modelo por tener muy alta cardinalidad y la variable ID
 def remover_var(df):
-  df_remover_var = df.drop(['Model','ID'],axis=1,errors='ignore')
-  return df_remover_var
+    df_remover_var = df.drop(['Model', 'ID'], axis=1, errors='ignore')
+    return df_remover_var
 
 # Definición de la función de separación x-y
 def sep_x_y(df):
-  x_inicial = df.drop('Price',axis=1)
-  y = df.Price
-  return x_inicial,y
-
+    x_inicial = df.drop('Price', axis=1)
+    y = df.Price
+    return x_inicial, y
 # Cargar el modelo
 model = joblib.load('pipeline_model.pkl')
 
