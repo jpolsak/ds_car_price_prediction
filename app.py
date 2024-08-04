@@ -76,7 +76,27 @@ ID = 0
 Model = 0
 
 # Preprocesamiento de datos
-input_data = np.array([[ID, Price, Levy, Manufacturer, Model, 'Prod. year', Category, Leather interior, Fuel type, Engine volume, Turbo, Mileage_km, Cylinders, Gear box type, Drive wheels, Doors, Wheel, Color, Airbags]])
+input_data = pd.DataFrame({
+    'ID': [0],  # ID es eliminada en preprocesamiento, así que puede ser 0
+    'Levy': [Levy],
+    'Manufacturer': [Manufacturer],
+    'Model': [0],  # Model es eliminada en preprocesamiento, así que puede ser 0
+    'Prod_year': [Prod_year],
+    'Category': [Category],
+    'Leather_interior': [Leather_interior],
+    'Turbo': [Turbo],
+    'Fuel_type': [Fuel_type],
+    'Engine_volume': [Engine_volume],
+    'Mileage': [Mileage_km],
+    'Cylinders': [Cylinders],
+    'Gear_box_type': [Gear_box_type],
+    'Drive_wheels': [Drive_wheels],
+    'Doors': [Doors],
+    'Wheel': [Wheel],
+    'Color': [Color],
+    'Airbags': [Airbags],
+    'Price': [Price]  # Incluimos Price como 0 para completar las columnas necesarias
+})
 
 # Realizar la predicción
 if st.button('Predecir'):
