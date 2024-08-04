@@ -107,7 +107,7 @@ pipeline_preprocesamiento_1 = Pipeline(steps=[('Remover duplicados',transformado
                                             ('Imputación de Levy',transformador_imputación),
                                             ('Separación x-y',transformador_sep_x_y)])
 
-pipeline_preprocesamiento_2 = Pipeline(steps=[('Encoding',transformador_encoding)])
+pipeline_preprocesamiento_2 = Pipeline(steps=[('encoding',transformador_encoding)])
 
 # Preprocesamiento
 x_inicial,y = pipeline_preprocesamiento_1.fit_transform(df)
