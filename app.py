@@ -190,4 +190,5 @@ if st.button('Predecir'):
     # Obtener el valor de la predicción y formatearlo
     precio_predicho = prediction[0]
     st.write(f'El precio predicho es: ${precio_predicho:.2f}')
+  print(x_input_preprocesado)
   
