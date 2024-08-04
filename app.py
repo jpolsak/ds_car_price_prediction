@@ -13,8 +13,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import r2_score
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestRegressor as RF
 from lightgbm import LGBMRegressor
 
