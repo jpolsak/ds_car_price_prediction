@@ -183,5 +183,5 @@ x_input = pipeline_preprocesamiento_2.transform(x_inicial_input)
 
 # Realizar la predicción
 if st.button('Predecir'):
-    prediction = model.predict(x_input)
+    precio_predicho = prediction[0]
     st.write(f'El precio predicho es: ${precio_predicho:.2f}')
