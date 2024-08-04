@@ -8,7 +8,6 @@ from sklearn.compose import make_column_transformer
 from sklearn.compose import make_column_selector
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.tree import DecisionTreeRegressor
-pip install lightgbm
 from lightgbm import LGBMRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
