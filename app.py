@@ -107,7 +107,7 @@ pipeline_preprocesamiento_1 = Pipeline(steps=[('Remover duplicados',transformado
                                             ('Imputación de Levy',transformador_imputación),
                                             ('Separación x-y',transformador_sep_x_y)])
 
-pipeline_preprocesamiento_2 = Pipeline(steps=[('encoding',transformador_encoding)])
+pipeline_preprocesamiento_2 = Pipeline(steps=[('Encoding',transformador_encoding)])
 
 # Preprocesamiento
 x_inicial,y = pipeline_preprocesamiento_1.fit_transform(df)
@@ -190,6 +190,4 @@ if st.button('Predecir'):
     # Obtener el valor de la predicción y formatearlo
     precio_predicho = prediction[0]
     st.write(f'El precio predicho es: ${precio_predicho:.2f}')
-    # Mostrar los datos preprocesados (útil para depuración)
-    st.write('Datos preprocesados:')
-    st.write(pd.DataFrame(x_input_preprocesado, columns=pipeline_preprocesamiento_2.named_steps['encoding'].get_feature_names_out()))
+  print(x_input_preprocesado)
