@@ -184,17 +184,8 @@ input_data = pd.DataFrame({
     'Airbags': [Airbags],
 })
 
-
-# Preprocesar input_data usando pipeline_preprocesamiento_1
-x_inicial_preprocesado = x_inicial
-    
-# Obtener y mostrar las columnas
-columnas = x_inicial_preprocesado.columns
-st.write('Columnas después del Pipeline 1:')
-st.write(columnas)
-
 # Mostrar el DataFrame de entrada
-st.write('DataFrame de entrada:')
+st.write('Resumen de valores de entrada:')
 st.write(input_data)
 
 # Realizar la predicción
