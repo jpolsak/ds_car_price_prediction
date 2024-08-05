@@ -204,5 +204,5 @@ if st.button('Predecir'):
 # Creación del explainer
 modelo = model.named_steps['estimator']
 explainer = shap.Explainer(modelo)
-shap.plots.waterfall(explainer(x_input_preprocesado))
+shap.plots.waterfall(shap_values[0])
 
