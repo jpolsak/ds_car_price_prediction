@@ -202,8 +202,4 @@ if st.button('Predecir'):
     precio_predicho = prediction[0]
     st.write(f'El precio predicho es: ${precio_predicho:.2f}')
 
-# Creación del explainer
-modelo = model.named_steps['estimator']
-explainer = shap.Explainer(modelo)
-shap.plots.waterfall(shap_values[0])
 
