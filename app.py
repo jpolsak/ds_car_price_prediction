@@ -19,8 +19,6 @@ from sklearn.ensemble import RandomForestRegressor as RF
 import gzip
 import requests
 from io import BytesIO
-import shap
-import matplotlib.pyplot as plt
 
 #Extracción dataset
 df = pd.read_csv('https://raw.githubusercontent.com/jpolsak/datasets/main/car_price_prediction_modif.csv')
