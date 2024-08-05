@@ -19,6 +19,7 @@ from sklearn.ensemble import RandomForestRegressor as RF
 import gzip
 import requests
 from io import BytesIO
+import shap
 
 #Extracción dataset
 df = pd.read_csv('https://raw.githubusercontent.com/jpolsak/datasets/main/car_price_prediction_modif.csv')
@@ -199,4 +200,9 @@ if st.button('Predecir'):
     # Obtener el valor de la predicción y formatearlo
     precio_predicho = prediction[0]
     st.write(f'El precio predicho es: ${precio_predicho:.2f}')
+
+# Creación del explainer
+modelo = model.named_steps['estimator']
+explainer = shap.Explainer(modelo)
+shap.plots.waterfall(explainer(x_input_preprocesado))
 
