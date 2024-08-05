@@ -172,7 +172,7 @@ input_data = pd.DataFrame({
     'Category': [Category],
     'Leather interior': [Leather_interior],
     'Fuel type': [Fuel_type],
-    'Engine_volume': [Engine_volume],
+    'Engine volume': [Engine_volume],
     'Turbo': [Turbo],
     'Mileage_km': [Mileage_km],
     'Cylinders': [Cylinders],
